@@ -11,6 +11,10 @@ let btnString;
 let btns = document.querySelectorAll('#btn');
 let homeScoreBoard = document.querySelector('.home-scoreboard');
 let guestScoreBoard = document.querySelector('.guest-scoreboard');
+let newGame = document.querySelector('#new-game');
+
+const homeWinning = document.querySelector('.home-scoreboard');
+const guestWinning = document.querySelector('.guest-scoreboard');
 
 
 // Iterates through nodelist, on click assigning classname string to btnString.
@@ -21,10 +25,25 @@ for(let item of btns) {
         updateScore();
         updateScoreBoards();
 
-        
-
+        // Checking winning/draw states and manipulating the dom
+        if(homeScore > guestScore) {
+            homeWinning.style.border = '3px solid #9AABD8';
+            guestWinning.style.border = '';
+            
+        } else if(homeScore === guestScore){
+            guestWinning.style.border = '2px solid #F94F6D';
+            homeWinning.style.border = '2px solid #F94F6D';
+        } else {
+            guestWinning.style.border = '3px solid #9AABD8';
+            homeWinning.style.border = '';
+        }
     })
 }
+
+// Event Listener on new game button
+newGame.addEventListener('click', () => {
+    resetGame();
+});
 
 // Conditional check on btnString - updates global score variables
 function updateScore() {
@@ -57,5 +76,16 @@ function updateScoreBoards() {
     homeScoreBoard.textContent = homeScore;
     guestScoreBoard.textContent = guestScore;    
 };
+
+// Resets the game
+function resetGame() {
+    homeScore = 0;
+    guestScore = 0;
+    homeScoreBoard.textContent = 0;
+    guestScoreBoard.textContent = 0;
+    guestWinning.style.border = '';
+    homeWinning.style.border = '';
+};
+
 
 
